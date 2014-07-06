@@ -85,7 +85,7 @@ gulp.task 'js:app' ->
     .pipe gulp-insert.prepend 'module.exports = '
     .pipe gulp-commonjs!
 
-  app = gulp.src 'app/**/*.ls'
+  app = gulp.src ['src/**/*.ls', 'sample/**/*.ls']
     .pipe gulp-livescript(const : true).on 'error', gutil.log
 
   s = streamqueue { +objectMode }

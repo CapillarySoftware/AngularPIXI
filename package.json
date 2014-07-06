@@ -2,7 +2,7 @@
   "author": "Isaac Shapira",
   "name": "AngularPIXI",
   "description": "PIXI based rendering in Angular",
-  "version": "0.0.0"
+  "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/CapillarySoftware/angularPIXI.git"
@@ -29,7 +29,7 @@
     "mocha": "~1.14.0",
     "chai": "~1.8.0",
     "streamqueue": "~0.0.5",
-    "gulp": "~3.5.0",
+    "gulp": "~3.8.5",
     "gulp-util": "~2.2.13",
     "gulp-exec": "~1.0.4",
     "gulp-livescript": "~0.1.1",
