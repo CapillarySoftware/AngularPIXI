@@ -48,7 +48,7 @@ gulp.task 'dev' <[httpServer template assets js:vendor js:app css]> ->
   livereload-server.listen LIVERELOADPORT, ->
     return gutil.log it if it
   gulp.watch ['app/**/*.jade'] <[template]>
-  gulp.watch ['app/**/*.ls', 'app/**/*.jsenv'] <[js:app]>
+  gulp.watch ['src/**/*.ls', 'sample/**/*.ls', 'app/**/*.jsenv'] <[js:app]>
   gulp.watch 'app/assets/**' <[assets]>
   gulp.watch 'app/**/*.styl' <[css]>
 
@@ -77,7 +77,7 @@ gulp.task 'bower' ->
   gulp-bower!
 
 gulp.task 'js:app' ->
-  env = gulp.src 'app/**/*.jsenv'
+  env = gulp.src 'src/**/*.jsenv'
     .pipe gulp-json-editor (json) ->
       for key of json when process.env[key]?
         json[key] = that
