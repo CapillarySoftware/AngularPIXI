@@ -13,7 +13,7 @@ describe "Presentable Router", (,) ->
     $location := _$location_
 
   beforeEach !->
-    {__registry} = ___PresentableRouterTesting!
+    {__registry} := ___PresentableRouterTesting!
 
   it 'Route should be a simple constructor', ->
     expect Route .to.exist
@@ -27,4 +27,14 @@ describe "Presentable Router", (,) ->
       expect __registry .to.be.empty
 
     it 'registerRoute should add', ->
+      url      = '/foo'
+      template = 'bar'
+
+      registerRoute new Route {url, template}
+      expect __registry      .to.not.be.empty
+      expect __registry      .to.have.property url
+      expect __registry[url] .to.equal template
+      expect __registry      .to.have.size 1
+
+    # it 'registerRoute'
 
