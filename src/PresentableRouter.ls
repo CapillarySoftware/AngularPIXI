@@ -9,4 +9,4 @@ Main = ($rootScope, $location) ->
 
 
 
-angular.module \Present .provider \Presentable, {Route, registerRoute, $get : Main}
+angular.module \Present .provider \PresentableRouter, {Route, registerRoute, $get : Main}

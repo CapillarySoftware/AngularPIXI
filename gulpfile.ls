@@ -37,7 +37,7 @@ gulp.task 'test:karma' ->
   ]
   .pipe gulp-karma do
     config-file: 'test/karma.conf.ls'
-    action: 'run'
+    action: 'watch'
     browsers: <[PhantomJS]>
   .on 'error' ->
     console.log it
@@ -73,8 +73,7 @@ gulp.task 'index' ->
 require! <[gulp-bower gulp-bower-files gulp-filter gulp-uglify gulp-csso]>
 require! <[gulp-concat gulp-json-editor gulp-commonjs gulp-insert]>
 
-gulp.task 'bower' ->
-  gulp-bower!
+gulp.task 'bower' -> gulp-bower!
 
 gulp.task 'js:app' ->
   env = gulp.src 'src/**/*.jsenv'
