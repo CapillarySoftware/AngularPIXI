@@ -1,12 +1,19 @@
 class Route
   ({@url, @template}) ->
+  fmap : (f) -> f @url
 
-__routes   = {}
+__registry   = {}
 
 registerRoute = ({url, template}) -> routes[url] = template
 
+PresentableRouter = ($rootScope) -> {Route, registerRoute}
+
 Main = ($rootScope, $location) ->
 
+  $rootScope.$on '$locationChangeSuccess', ->
+    
+  PresentableRouter!
 
+angular.module \Present .provider \PresentableRouter, $get : Main
 
-angular.module \Present .provider \PresentableRouter, {Route, registerRoute, $get : Main}
+@___PresentableRouterTesting = -> {__registry}

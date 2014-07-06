@@ -7,8 +7,6 @@ livereload = -> gulp-livereload livereload-server
 
 var http-server
 production = true if gutil.env.env is \production
-# replace your google analytics id here
-google-analytics = 'UA-blah-blah' if gutil.env.env is \production
 
 gulp.task 'httpServer' ->
   require! express
@@ -62,11 +60,8 @@ gulp.task 'template' <[index]> ->
 gulp.task 'index' ->
   pretty = 'yes' if gutil.env.env isnt \production
 
-  gulp.src ['app/*.jade']
-    .pipe gulp-jade do
-      pretty: pretty
-      locals:
-        googleAnalytics: google-analytics
+  gulp.src ['sample/*.jade']
+    .pipe gulp-jade {pretty}
     .pipe gulp.dest '_public'
     .pipe livereload!
 
@@ -85,7 +80,7 @@ gulp.task 'js:app' ->
     .pipe gulp-commonjs!
 
   app = gulp.src ['src/**/*.ls', 'sample/**/*.ls']
-    .pipe gulp-livescript(const : true).on 'error', gutil.log
+    .pipe gulp-livescript {const : true, +prelude} .on 'error', gutil.log
 
   s = streamqueue { +objectMode }
     .done env, app
