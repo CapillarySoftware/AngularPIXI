@@ -5,14 +5,12 @@
   "main": "_public/js/app.js",
   "ignore": [
     "**/.*",
-    "node_modules",
-    "components"
+    "node_modules"
   ],
   "dependencies": {
-    "commonjs-require-definition": "~0.1.2",
     "angular": "1.2.14",
     "angular-mocks": "1.2.14",
-    "angular-ui-router": "0.2.10"
+    "prelude-ls": "*"
   },
   "overrides": {
     "angular": {
@@ -21,9 +19,6 @@
       }
     },
     "angular-mocks": {
-      "main": "README.md"
-    },
-    "angular-scenario": {
       "main": "README.md"
     }
   }

@@ -4,6 +4,8 @@ class Route
 
 __registry        = {}
 
+map = (f, x) -> Array.prototype.map.call x, f
+
 # registerRoutes :: [Route] -> IO () 
 registerRoutes     = (rs) !->
   map (({url, template}) -> __registry[url] := template), rs
