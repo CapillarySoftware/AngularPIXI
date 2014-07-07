@@ -7,6 +7,8 @@ module.exports = (karma) ->
       * "_public/js/app.templates.js"
       * "_public/js/app.js"
       * "bower_components/angular-mocks/angular-mocks.js"
+      * "node_modules/sinon/pkg/sinon.js"
+      * "node_modules/sinon-chai/lib/sinon-chai.js"
       * "test/unit/**/*.spec.ls"
     exclude: []
     reporters: ["progress"]

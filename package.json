@@ -50,6 +50,7 @@
     "connect-livereload": "~0.3.2",
     "tiny-lr": "~0.0.5",
     "gulp-if": "~0.0.5",
-    "chai-interface": "~1.1.0"
+    "sinon": "~1.10.2",
+    "sinon-chai": "~2.5.0"
   }
 }

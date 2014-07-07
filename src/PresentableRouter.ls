@@ -1,17 +1,30 @@
 class Route
   ({@url, @template}) ->
-  fmap : (f) -> f @url
+  fmap : (f) ->  new Route url : (f @url), template : @template
 
 __registry        = {}
 
-registerRoute     = ({url, template}) -> __registry[url] = template
-PresentableRouter = ($rootScope)      -> {Route, registerRoute}
+# registerRoutes :: [Route] -> IO () 
+registerRoutes     = (rs) !->
+  map (({url, template}) -> __registry[url] := template), rs
+  
+# PresentableRouter :: IO () -> Goodies
+PresentableRouter = (_) -> {Route, registerRoutes}
 
-Main = ($rootScope, $location) ->
-  $rootScope.$on '$locationChangeSuccess', ->
+# Main :: $rootScope -> $location -> $templateCache -> PresentableCompiler -> IO ()
+Main = ($rs, $l, $tc, PC) !->
+  
+  # compileFromTemplate :: Path -> IO ()
+  compileFromTemplate = (p) !->
+    if __registry[p]
+    then PC p
+    else PC!
 
-  PresentableRouter!
+  c = compileFromTemplate . $l.path  
+  $rs.$on '$locationChangeSuccess', c
+  c!
 
-angular.module \Present .provider \PresentableRouter, $get : Main
+angular.module \Present .provider \PresentableRouter, $get : 
+  <[$rootScope $location $templateCache PresentableCompiler]> ++ PresentableRouter . Main
 
 @___PresentableRouterTesting = -> {__registry}
