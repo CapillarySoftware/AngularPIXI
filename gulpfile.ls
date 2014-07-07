@@ -85,7 +85,7 @@ gulp.task 'js:app' ->
     'src/**/*.ls'
     'sample/**/*.ls'
   ]
-    .pipe gulp-livescript {const : true, +prelude, +bare} .on 'error', gutil.log
+    .pipe gulp-livescript {const : true, +prelude} .on 'error', gutil.log
 
   s = streamqueue { +objectMode }
     .done env, app

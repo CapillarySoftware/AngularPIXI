@@ -10,7 +10,8 @@
   "dependencies": {
     "angular": "1.2.14",
     "angular-mocks": "1.2.14",
-    "prelude-ls": "*"
+    "prelude-ls": "*",
+    "lodash"    : "*"
   },
   "overrides": {
     "angular": {
@@ -20,6 +21,9 @@
     },
     "angular-mocks": {
       "main": "README.md"
+    },
+    "prelude-ls": {
+      "main":"browser/prelude-browser.js"
     }
   }
 }

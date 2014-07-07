@@ -40,7 +40,7 @@ describe "Presentable Router", (,) !->
       expect __registry      .to.have.property url
       expect __registry[url] .to.equal template
 
-  # describe 'location is heard', (,) !->
+  describe 'location is heard', (,) !->
     
-  #   it 'compiler should always be called atleast once', ->
-  #     expect PresentableCompiler .to.have.been.calledOnce
+    it 'compiler should always be called atleast once', ->
+      expect PresentableCompiler .to.have.been.calledOnce
