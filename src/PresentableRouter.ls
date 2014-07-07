@@ -6,22 +6,19 @@ class Route
 __registry        = {}
 
 # registerRoutes :: [Route] -> IO () 
-registerRoutes    = (rs) !->
-  map (({url, template}) -> __registry[url] := template), rs
+registerRoutes    = map ({url, template}) -> __registry[url] := template
   
 # PresentableRouter :: IO () -> Goodies
 PresentableRouter = (_) -> {Route, registerRoutes}
 
+# compileFromTemplate :: PresentableCompiler -> Path -> IO ()
+compileFromTemplate = (PC, p) !--> if __registry[p]
+                                   then PC p
+                                   else PC!
+
 # Main :: $rootScope -> $location -> $templateCache -> PresentableCompiler -> IO ()
 Main = ($rs, $l, $tc, PC) !->
-  
-  # compileFromTemplate :: Path -> IO ()
-  compileFromTemplate = (p) !->
-    if __registry[p]
-    then PC p
-    else PC!
-
-  c = compileFromTemplate << $l.path  
+  c = compileFromTemplate PC << $l.path  
   $rs.$on '$locationChangeSuccess', c
   c!
 

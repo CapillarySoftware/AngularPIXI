@@ -42,5 +42,5 @@ describe "Presentable Router", (,) !->
 
   describe 'location is heard', (,) !->
     
-    it 'compiler should always be called atleast once', ->
+    it 'compiler should always be called atleast once', !->
       expect PresentableCompiler .to.have.been.calledOnce
