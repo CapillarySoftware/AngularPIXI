@@ -7,8 +7,6 @@ livereload = -> gulp-livereload livereload-server
 
 var http-server
 production = true if gutil.env.env is \production
-# replace your google analytics id here
-google-analytics = 'UA-blah-blah' if gutil.env.env is \production
 
 gulp.task 'httpServer' ->
   require! express
@@ -33,6 +31,8 @@ gulp.task 'test:karma' ->
     * "_public/js/app.templates.js"
     * "_public/js/app.js"
     * "bower_components/angular-mocks/angular-mocks.js"
+    * "node_modules/sinon/pkg/sinon.js"
+    * "node_modules/sinon-chai/lib/sinon-chai.js"    
     * "test/unit/**/*.spec.ls"
   ]
   .pipe gulp-karma do
@@ -62,11 +62,8 @@ gulp.task 'template' <[index]> ->
 gulp.task 'index' ->
   pretty = 'yes' if gutil.env.env isnt \production
 
-  gulp.src ['app/*.jade']
-    .pipe gulp-jade do
-      pretty: pretty
-      locals:
-        googleAnalytics: google-analytics
+  gulp.src ['sample/*.jade']
+    .pipe gulp-jade {pretty}
     .pipe gulp.dest '_public'
     .pipe livereload!
 
@@ -84,8 +81,11 @@ gulp.task 'js:app' ->
     .pipe gulp-insert.prepend 'module.exports = '
     .pipe gulp-commonjs!
 
-  app = gulp.src ['src/**/*.ls', 'sample/**/*.ls']
-    .pipe gulp-livescript(const : true).on 'error', gutil.log
+  app = gulp.src [
+    'src/**/*.ls'
+    'sample/**/*.ls'
+  ]
+    .pipe gulp-livescript {const : true, +prelude} .on 'error', gutil.log
 
   s = streamqueue { +objectMode }
     .done env, app
