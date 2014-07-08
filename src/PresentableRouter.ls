@@ -7,9 +7,6 @@ __registry        = {}
 
 # registerRoutes :: [Route] -> IO () 
 registerRoutes    = map ({url, template}) -> __registry[url] := template
-  
-# PresentableRouter :: IO () -> Goodies
-PresentableRouter = (_) -> {Route, registerRoutes}
 
 # compileFromTemplate :: PresentableCompiler -> Path -> IO ()
 compileFromTemplate = (PC, p) !--> if __registry[p]
@@ -23,6 +20,6 @@ Main = ($rs, $l, $tc, PC) !->
   c!
 
 angular.module \Present .provider \PresentableRouter, $get : 
-  <[$rootScope $location $templateCache PresentableCompiler]> ++ Main >> PresentableRouter
+  <[$rootScope $location $templateCache PresentableCompiler]> ++ Main >> -> {Route, registerRoutes}
 
 @___PresentableRouterTesting = -> {__registry}
