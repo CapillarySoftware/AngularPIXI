@@ -1,6 +1,7 @@
 describe "Presentable Router", (,) !->
   Route               = null
   registerRoutes      = null
+  activateRoutes      = null
   $location           = null
   $rootScope          = null
   __registry          = null
@@ -15,6 +16,7 @@ describe "Presentable Router", (,) !->
     {
       Route
       registerRoutes
+      activateRoutes
     }          := $injector.get 'PresentableRouter' 
     $location  := _$location_
     $rootScope := _$rootScope_
@@ -45,10 +47,11 @@ describe "Presentable Router", (,) !->
   describe 'location is heard', (,) !->
 
     describe 'with no routes', (,) !->
+
+      beforeEach -> activateRoutes!
     
       it 'compiler should always be called atleast once', !->
         expect PresentableCompiler .to.have.been.calledOnce
-        expect PresentableCompiler .to.have.been.calledWith ""
 
     describe 'with routes', (,) !->
 
@@ -58,6 +61,7 @@ describe "Presentable Router", (,) !->
           new Route url : '/bar', template : 'second'
           new Route url : '/baz', template : 'third'
         ]
+        activateRoutes!
 
       it 'the head of the routes should be the default', !->
         expect PresentableCompiler .to.have.been.calledWith 'first'

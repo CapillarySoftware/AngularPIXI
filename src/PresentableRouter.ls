@@ -3,23 +3,33 @@ class Route
   ({@url, @template}) ->
   fmap : (f) ->  new Route url : (f @url), template : @template
 
-__registry        = {}
+__registry          = {}
+
+# registerRoutes :: Route -> IO ()
+_registerRoutes = map ({url, template}) !-> __registry[url] := template
 
 # registerRoutes :: [Route] -> IO () 
-registerRoutes    = map ({url, template}) -> __registry[url] := template
+registerRoutes    = (rs) !-> 
+  __registry.__default = head rs
+  _registerRoutes rs
 
-# compileFromTemplate :: PresentableCompiler -> Path -> IO ()
-compileFromTemplate = (PC, p) !--> if __registry[p]
-                                   then PC p
-                                   else PC!
+# runTemplate :: PresentableCompiler -> $location -> Route -> IO ()
+runTemplate = (PC, $l, {url, template}) !-> 
+   $l.path url if $l.path! !== url
+   PC template
 
-# Main :: $rootScope -> $location -> $templateCache -> PresentableCompiler -> IO ()
-Main = ($rs, $l, $tc, PC) !->
-  c = compileFromTemplate PC << $l.path  
-  $rs.$on '$locationChangeSuccess', c
-  c!
+# route :: PresentableCompiler -> $location -> URL -> IO ()
+route = (PC, $l) !-> 
+  | __registry[$l.path!] => PC __registry[$l.path!]
+  | __registry.__default => runTemplate PC, $l, __registry.__default
+  | otherwise            => runTemplate PC, $l, new Route url : "/", template : ""
+
+# Main :: PresentableCompiler -> $rootScope -> $location -> $templateCache -> IO ActivateRoutes
+Main = (PC, $rs, $l, $tc) ->  
+  $rs.$on '$locationChangeSuccess', !-> route PC, $l
+  return -> $rs.$emit '$locationChangeSuccess'
 
 angular.module \Present .provider \PresentableRouter, $get : 
-  <[$rootScope $location $templateCache PresentableCompiler]> ++ Main >> -> {Route, registerRoutes}
+  <[PresentableCompiler $rootScope $location $templateCache]> ++ Main >> (activateRoutes) -> { Route, registerRoutes, activateRoutes }
 
 @___PresentableRouterTesting = -> {__registry}
