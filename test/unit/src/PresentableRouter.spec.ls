@@ -63,16 +63,22 @@ describe "Presentable Router", (,) !->
         ]
         activateRoutes!
 
+      locateAndDigest = (p) !->
+        $location.path p
+        $rootScope.$digest!
+
       it 'the head of the routes should be the default', !->
         expect PresentableCompiler .to.have.been.calledWith 'first'
         expect $location.path! .to.equal '/foo'
 
-      it 'the location should control the template', !->
-        $location.path '/bar'
-        $rootScope.$digest!
-        expect PresentableCompiler .to.have.been.calledWith 'second'
-
-      it 'the location should allow the first redudantly', ->
-        $location.path '/foo'
-        $rootScope.$digest!
+      it 'the location should allow the first redudantly', !->
+        locateAndDigest '/foo'
         expect PresentableCompiler .to.have.been.calledWith 'first'
+
+      it 'the location should control the template', !->
+        locateAndDigest '/bar'
+        expect PresentableCompiler .to.have.been.calledWith 'second'
+        locateAndDigest '/baz'
+        expect PresentableCompiler .to.have.been.calledWith 'third'
+
+

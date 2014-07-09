@@ -32,4 +32,4 @@ Main = (PC, $rs, $l, $tc) ->
 angular.module \Present .provider \PresentableRouter, $get : 
   <[PresentableCompiler $rootScope $location $templateCache]> ++ Main >> (activateRoutes) -> { Route, registerRoutes, activateRoutes }
 
-@___PresentableRouterTesting = -> {__registry}
+@___PresentableRouterTesting = -> {__registry} 
