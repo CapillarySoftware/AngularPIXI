@@ -2,6 +2,8 @@ require! <[tiny-lr]>
 require! <[gulp gulp-util gulp-stylus gulp-karma gulp-livereload gulp-livescript streamqueue gulp-if]>
 gutil = gulp-util
 
+{argv} = require 'yargs'
+
 livereload-server = require('tiny-lr')!
 livereload = -> gulp-livereload livereload-server
 
@@ -37,7 +39,7 @@ gulp.task 'test:karma' ->
   ]
   .pipe gulp-karma do
     config-file: 'test/karma.conf.ls'
-    action: 'run'
+    action: (if argv.w then \watch else \run)
     browsers: <[PhantomJS]>
   .on 'error' ->
     console.log it

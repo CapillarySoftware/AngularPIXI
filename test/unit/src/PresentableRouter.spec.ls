@@ -44,6 +44,12 @@ describe "Presentable Router", (,) !->
       expect __registry      .to.have.property url
       expect __registry[url] .to.equal template
 
+    it 'a non route should error', !->
+      bad = ->
+        registerRoutes [{url, template}]
+
+      expect bad .to.throw Error
+
   describe 'location is heard', (,) !->
 
     describe 'with no routes', (,) !->

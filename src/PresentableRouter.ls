@@ -1,22 +1,19 @@
-# data Route = Route Url TemplateKey
+# data Route = Route Url Template
 class Route
   ({@url, @template}) ->
-  fmap : (f) ->  new Route url : (f @url), template : @template
+  fmap : (f) ->  new Route url : (f @url), template : (f @template)
 
 __registry          = {}
 
-# registerRoutes :: Route -> IO ()
-_registerRoutes = map ({url, template}) !-> __registry[url] := template
-
 # registerRoutes :: [Route] -> IO () 
-registerRoutes    = (rs) !-> 
-  __registry.__default = head rs
-  _registerRoutes rs
+registerRoutes    = (rs) !->
+  __registry.__default  = head rs
+  rs |> _registerRoutes = map (check Route) >> ({url, template}) !-> __registry[url] := template
 
 # runTemplate :: PresentableCompiler -> $location -> Route -> IO ()
-runTemplate = (PC, $l, {url, template}) !-> 
-   $l.path url if $l.path! !== url
-   PC template
+runTemplate = (PC, $l, {url, template}) !->
+  $l.path url if $l.path! !== url
+  PC template
 
 # route :: PresentableCompiler -> $location -> URL -> IO ()
 route = (PC, $l) !-> 
@@ -30,6 +27,7 @@ Main = (PC, $rs, $l, $tc) ->
   return -> $rs.$emit '$locationChangeSuccess'
 
 angular.module \Present .provider \PresentableRouter, $get : 
-  <[PresentableCompiler $rootScope $location $templateCache]> ++ Main >> (activateRoutes) -> { Route, registerRoutes, activateRoutes }
+  <[PresentableCompiler $rootScope $location $templateCache]> ++ Main >> (activateRoutes) -> 
+    { Route, registerRoutes, activateRoutes }
 
 @___PresentableRouterTesting = -> {__registry} 
