@@ -11,7 +11,8 @@
     "angular": "1.2.14",
     "angular-mocks": "1.2.14",
     "prelude-ls": "*",
-    "lodash": "*"
+    "lodash": "*",
+    "js-yaml": "~3.1.0"
   },
   "overrides": {
     "angular": {
@@ -24,6 +25,9 @@
     },
     "prelude-ls": {
       "main": "browser/prelude-browser.js"
+    },
+    "js-yaml":{
+      "main": "dist/js-yaml.min.js"
     }
   }
 }
