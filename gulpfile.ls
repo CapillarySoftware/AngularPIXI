@@ -37,7 +37,7 @@ gulp.task 'test:karma' ->
   ]
   .pipe gulp-karma do
     config-file: 'test/karma.conf.ls'
-    action: 'watch'
+    action: 'run'
     browsers: <[PhantomJS]>
   .on 'error' ->
     console.log it
