@@ -16,7 +16,9 @@
     "dev": "gulp --require LiveScript dev",
     "test": "gulp --require LiveScript test:unit"
   },
-  "dependencies": {},
+  "dependencies": {
+    "yargs": "~1.2.6"
+  },
   "devDependencies": {
     "express": "3.4.x",
     "LiveScript": "1.2.x",
