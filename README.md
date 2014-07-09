@@ -1,3 +1,5 @@
+![](https://travis-ci.org/CapillarySoftware/AngularPIXI.svg?branch=develop)
+
 ```
   npm install && bower install
 ```
